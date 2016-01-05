@@ -3,17 +3,17 @@
 #
 # This repo was created when I found this blog
 # http://spencer.gibb.us/blog/2014/02/03/introducing-battleschool/
-# and thought it's good idea to automate the install/config of my mac book
+# and thought it's a good idea to automate the install/config of my mac book
 #
 
 PROG="`basename $0`"
 
 SETUP_LOCAL_CONFIG="FALSE"
 USE_LOCAL_CONFIG="FALSE"
-INSTALL_ALL_AS_DEFAULT="TRUE"
+INSTALL_ALL_AS_DEFAULT="FALSE"
 YML_CONFIG_URL="https://raw.githubusercontent.com/dieple/ansible-mac-dev-local-setup/master/config.yml"
 LOCAL_CONFIG_FILE="~/.battleschool/config.yml"
-
+TEST_MODE="FALSE"
 
 usage()
 {
@@ -32,8 +32,8 @@ setup_config_info()
 {
 	echo ""
   echo "Edit the file ~/.battleschool/config.yml"
-  echo "to choose the package to install then re-run"
-  echo "$PROG with the -s option"
+  echo "and choose the package to install then re-run"
+  echo "$PROG with the -l option"
 	echo ""
 }
 
@@ -54,15 +54,15 @@ check_prerequites()
 # Main program
 ###
 
-while getopts "lst?" 2> /dev/null ARG
+while getopts "alst?" 2> /dev/null ARG
 do
 	case $ARG in
 
+		a)  INSTALL_ALL_AS_DEFAULT="TRUE";;
+
     l)  USE_LOCAL_CONFIG="TRUE"
-        INSTALL_ALL_AS_DEFAULT="FALSE";;
 
 		s)	SETUP_LOCAL_CONFIG="TRUE"
-        INSTALL_ALL_AS_DEFAULT="FALSE";;
 
 		t)	TEST_MODE="TRUE";;
 
@@ -76,11 +76,17 @@ then
 	YML_CONFIG_URL="https://raw.githubusercontent.com/dieple/ansible-mac-dev-local-setup/master/test-config.yml"
 fi
 
+if [ $SETUP_LOCAL_CONFIG = "FALSE" ] && [ $USE_LOCAL_CONFIG = "FALSE" ] && [ $INSTALL_ALL_AS_DEFAULT = "FALSE" ]
+then
+	echo "One of the option 'a' or 'l' or 's' must be TRUE to run"
+	usage
+	exit 1
+fi
 
-if [ "INSTALL_ALL_AS_DEFAULT" = "TRUE" ]; then
+if [ "$INSTALL_ALL_AS_DEFAULT" = "TRUE" ]; then
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass --config-file=$YML_CONFIG_URL
-elif [ "SETUP_LOCAL_CONFIG" = "TRUE" ]; then
+elif [ "$SETUP_LOCAL_CONFIG" = "TRUE" ]; then
   if [ ! -d ~/.battleschool ]; then
     mkdir ~/.battleschool
 	fi
@@ -92,6 +98,7 @@ else # run with local config
 	if [ ! -f $LOCAL_CONFIG_FILE ]; then
 		"echo `basename $LOCAL_CONFIG_FILE` does not exist"
     "echo run $0 with -s option to set it up first"
+		exit 1
 	fi
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass
