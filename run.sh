@@ -20,6 +20,8 @@ usage()
 	echo ""
 	echo "Usage: $PROG [options]"
 	echo ""
+	echo "[-a All] Install all packages from default URL config file"
+  echo ""
   echo "[-l Local] Use local ~/.battleschool/config.yml file"
   echo ""
   echo "[-s setup]  Setup local config.yml file first"
@@ -84,22 +86,28 @@ then
 fi
 
 if [ "$INSTALL_ALL_AS_DEFAULT" = "TRUE" ]; then
+	echo "1"
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass --config-file=$YML_CONFIG_URL
 elif [ "$SETUP_LOCAL_CONFIG" = "TRUE" ]; then
   if [ ! -d ~/.battleschool ]; then
+		echo "2"
     mkdir ~/.battleschool
 	fi
+	echo "3"
 	cd .battleschool
   curl -L $YML_CONFIG_URL > $LOCAL_CONFIG_FILE
   setup_config_info
   exit 0
 else # run with local config
+	echo "4"
 	if [ ! -f $LOCAL_CONFIG_FILE ]; then
+		echo "5"
 		"echo `basename $LOCAL_CONFIG_FILE` does not exist"
     "echo run $0 with -s option to set it up first"
 		exit 1
 	fi
+	echo "6"
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass
 fi

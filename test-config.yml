@@ -13,6 +13,6 @@ sources:
     - name: 'osx'
       repo: 'https://github.com/spencergibb/ansible-osx'
       playbooks:
-         - homebrew.yml      #must come before any use of homebrew module
-#         - macports.yml     #must come before any use of macports module
-          - alfred.yml
+        - homebrew.yml      #must come before any use of homebrew module
+#       - macports.yml     #must come before any use of macports module
+        - alfred.yml
