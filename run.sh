@@ -6,11 +6,12 @@
 # and thought it's good idea to automate the install/config of my mac book
 #
 
+PROG="`basename $0`"
+
 SETUP_LOCAL_CONFIG="FALSE"
 USE_LOCAL_CONFIG="FALSE"
 INSTALL_ALL_AS_DEFAULT="TRUE"
-PROG="`basename $0`"
-YML_CONFIG_URL="https://db.tt/aG2uyydU"
+YML_CONFIG_URL="https://raw.githubusercontent.com/dieple/ansible-mac-dev-local-setup/master/config.yml"
 LOCAL_CONFIG_FILE="~/.battleschool/config.yml"
 
 
@@ -41,7 +42,7 @@ check_prerequites()
   # uncomment the following if not already installed
   #sudo easy_install pip
   if which ansible >/dev/null; then
-    echo "ansible exists..."
+    echo "ansible already installed..."
   else
     echo "installing ansible"
     sudo pip install ansible --quiet
@@ -63,31 +64,35 @@ do
 		s)	SETUP_LOCAL_CONFIG="TRUE"
         INSTALL_ALL_AS_DEFAULT="FALSE";;
 
+		t)	TEST_MODE="TRUE";;
+
 		?)	usage
 			exit 1;;
 	esac
 done
 
-
-
-if [ "INSTALL_ALL_AS_DEFAULT" = "TRUE" ]
+if [ $TEST_MODE = "TRUE" ]
 then
+	YML_CONFIG_URL="https://raw.githubusercontent.com/dieple/ansible-mac-dev-local-setup/master/test-config.yml"
+fi
+
+
+if [ "INSTALL_ALL_AS_DEFAULT" = "TRUE" ]; then
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass --config-file=$YML_CONFIG_URL
-elif [ "SETUP_LOCAL_CONFIG" = "TRUE" ]
-  # check LOCAL
-  if [ -f $LOCAL_CONFIG_FILE ]
-  then
+elif [ "SETUP_LOCAL_CONFIG" = "TRUE" ]; then
+  if [ ! -d ~/.battleschool ]; then
     mkdir ~/.battleschool
-    cd .battleschool
-    curl -L $YML_CONFIG_URL > $LOCAL_CONFIG_FILE
-    setup_config_info
-    exit 0
-  else
-    "echo `basename $LOCAL_CONFIG_FILE` does not exist"
-    "echo run $0 with -s option to set it up first"
-  fi
+	fi
+	cd .battleschool
+  curl -L $YML_CONFIG_URL > $LOCAL_CONFIG_FILE
+  setup_config_info
+  exit 0
 else # run with local config
+	if [ ! -f $LOCAL_CONFIG_FILE ]; then
+		"echo `basename $LOCAL_CONFIG_FILE` does not exist"
+    "echo run $0 with -s option to set it up first"
+	fi
   check_prerequites
   sudo pip install battleschool && battle --ask-sudo-pass
 fi
