@@ -5,65 +5,65 @@ sources:
 #  local:
 #    - playbook.yml
 
-  url:
-    - name: playbook.yml
+#  url:
+#    - name: playbook.yml
       #url: https://db.tt/VcyI9dvr
 
   git:
     - name: 'osx'
       repo: 'https://github.com/spencergibb/ansible-osx'
       playbooks:
-         - homebrew.yml      #must come before any use of homebrew module
-#         - macports.yml     #must come before any use of macports module
-          - adium.yml
-          - alfred.yml
-#         - android-studio.yml
-          - atom.yml
-          - better-touch-tool.yml
-          - cask.yml
-          - charles.yml
-          - cheatsheet.yml
-          - chrome-stable.yml
-          - dropbox.yml
-          - evernote.yml
-          - fantastical.yml
-          - flux.yml
-          - fuseforosx.yml
-          - github.yml
-          - gitx.yml
-          - gvm.yml
-          - handbrake.yml
-          - iterm2.yml
-          - intellij-idea-ultimate15.yml
-          - istat-menus.yml
-          - iterm2.yml
-#         - java7.yml
-          - java8.yml
-          - kaleidoscope.yml
-          - karabiner.yml
-          - keepassx.yml
-          - libreoffice.yml
-          - macvim.yml
-          - macfusion.yml
-          - mou.yml
-          - notational-velocity.yml
-          - oh-my-zsh.yml
-          - quicksilver.yml
-          - seil.yml
-          - sequel-pro.yml
-          - skype.yml
-          - spectacle.yml
-          - sshfs.yml
-          - sublime2.yml
-          - sublime3.yml
-          - test.yml
-          - total-terminal.yml
-          - tower.yml
-          - transmit.yml
-          - truecrypt.yml
-          - usb-overdrive.yml
-          - vagrant.yml
-          - virtualbox.yml
-          - vlc.yml
-          - webstorm.yml
-          - xtra-finder.yml
+        - homebrew.yml      #must come before any use of homebrew module
+#        - macports.yml     #must come before any use of macports module
+        - adium.yml
+        - alfred.yml
+#        - android-studio.yml
+        - atom.yml
+        - better-touch-tool.yml
+        - cask.yml
+        - charles.yml
+        - cheatsheet.yml
+        - chrome-stable.yml
+        - dropbox.yml
+        - evernote.yml
+        - fantastical.yml
+        - flux.yml
+        - fuseforosx.yml
+        - github.yml
+        - gitx.yml
+        - gvm.yml
+        - handbrake.yml
+        - iterm2.yml
+        - intellij-idea-ultimate15.yml
+        - istat-menus.yml
+        - iterm2.yml
+#        - java7.yml
+        - java8.yml
+        - kaleidoscope.yml
+        - karabiner.yml
+        - keepassx.yml
+        - libreoffice.yml
+        - macvim.yml
+        - macfusion.yml
+        - mou.yml
+        - notational-velocity.yml
+        - oh-my-zsh.yml
+        - quicksilver.yml
+        - seil.yml
+        - sequel-pro.yml
+        - skype.yml
+        - spectacle.yml
+        - sshfs.yml
+        - sublime2.yml
+        - sublime3.yml
+        - test.yml
+        - total-terminal.yml
+        - tower.yml
+        - transmit.yml
+        - truecrypt.yml
+        - usb-overdrive.yml
+        - vagrant.yml
+        - virtualbox.yml
+        - vlc.yml
+        - webstorm.yml
+        - xtra-finder.yml

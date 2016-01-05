@@ -5,8 +5,8 @@ sources:
 #  local:
 #    - playbook.yml
 
-  url:
-    - name: playbook.yml
+#  url:
+#    - name: playbook.yml
       #url: https://db.tt/VcyI9dvr
 
   git:
